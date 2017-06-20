@@ -1,0 +1,60 @@
+<div class="col-sm-12  col-md-12 main"> 
+	<div class="row">
+		<a href="<?=base_url()?>subcontractors/create" class="btn btn-primary" data-toggle="mainmodal">
+			<?=$this->lang->line('application_create_subcontractor');?>
+		</a>
+	</div>
+	<div class="row">
+		<div class="table-head"> 
+			<?=$sub_contractor_title;?>
+		</div>
+		<div class="table-div">
+			<table class="data table" id="subcontractors" rel="<?=base_url()?>" cellspacing="0" cellpadding="0">
+				<thead>
+					<th class="hidden-xs" style="width:70px"><?=$this->lang->line('application_user_id');?></th>
+					<?php /* ?><th><?=$this->lang->line('application_user_profile_pic');?></th><?php */ ?>
+					<th class="hidden-xs"><?=$this->lang->line('application_firstname');?></th>
+					<th class="hidden-xs"><?=$this->lang->line('application_lastname');?></th>
+					<th class="hidden-xs"><?=$this->lang->line('application_email');?></th>
+					<th class="hidden-xs"><?=$this->lang->line('application_status');?></th>
+					<th><?=$this->lang->line('application_action');?></th>
+				</thead>
+				<?php $user_cnt = 0; ?>
+				<?php if( !empty( $subcontractors ) ){ ?>
+					<?php foreach ($subcontractors as $value): $user_cnt++;?>
+
+					<tr  id="<?=$value->user_id;?>" >
+						<td class="hidden-xs" style="width:70px"><?=$core_settings->company_prefix;?><?php  echo $user_cnt; ?></td>
+						<?php /* ?>
+						<?php $profile_pic = base_url().'files/media/'.$value->userpic; 
+							  $profile_pic_path = FCPATH.'/files/media/'.$value->userpic;
+						?>
+						<td>
+							<?php if( !empty($value->userpic) && file_exists($profile_pic_path) ) { ?>
+									<a href="<?=base_url().'subcontractors/view/'.$value->id?>"><img src="<?php echo $profile_pic; ?>" /></a>
+							<?php } else { ?>
+									<?php echo "no-image"; ?>
+							<?php } ?>
+						</td>
+						<?php */ ?>
+						<td><a href="<?=base_url().'subcontractors/view/'.$value->user_id?>"><?php echo $value->firstname; ?></a></td>
+						<td><?php echo $value->lastname; ?></td>
+						<td><a href="<?=base_url().'subcontractors/view/'.$value->user_id?>"><?php echo $value->email; ?></a></td>
+						<td><?php echo $value->status; ?></td>
+						<td class="option" width="8%">
+							<button type="button" class="btn-option delete po" data-toggle="popover" data-placement="left" data-content="<a class='btn btn-danger po-delete ajax-silent' href='<?=base_url()?>subcontractors/delete/<?=$value->user_id;?>'><?=$this->lang->line('application_yes_im_sure');?></a> <button class='btn po-close'><?=$this->lang->line('application_no');?></button> <input type='hidden' name='td-id' class='id' value='<?=$value->user_id;?>'>" data-original-title="<b><?=$this->lang->line('application_really_delete');?></b>"><i class="fa fa-times"></i>
+							</button>
+							<?php if( $value->status == active ){ ?>
+							<a href="<?=base_url()?>subcontractors/update/<?=$value->user_id;?>" class="btn-option" data-toggle="mainmodal"><i class="fa fa-cog"></i></a>
+							<?php } ?>
+						</td>
+						
+					</tr>
+					<?php endforeach;?>
+				<?php } ?>
+			</table>
+			<br clear="all">
+		
+		</div>
+	</div>
+</div>

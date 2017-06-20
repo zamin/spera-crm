@@ -1,0 +1,248 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Clients extends MY_Controller {
+           
+	public $company_id;
+	function __construct()
+	{
+		parent::__construct();
+		$access = FALSE;
+		if(!$this->user){
+			if($this->cid){redirect($this->cid);}else{redirect('login');}
+		}
+		#set default value if found null from session
+		$this->company_id = 0;
+        if($this->sessionArr['company_id'])
+        {
+		$this->company_id = $this->sessionArr['company_id'];
+        }
+		$this->load->database();
+	}	
+	
+	function index()
+	{
+		$company_id = $this->company_id;
+		$this->view_data['clients'] = null;
+		if( !empty( $company_id ) ){
+			$client_query = $this->db->select('*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("admin = '0' AND users.status IN ('active', 'inactive') AND user_roles.role_id = 3 AND company_id = ".$company_id)->get();
+			if( $client_query->num_rows() > 0 ) {
+				$this->view_data['clients'] = $client_query->result_object();
+			}
+		}
+		$this->content_view = 'clients/all';	
+	}
+	
+	function email_check()
+    {
+		$message = null;
+        // allow only Ajax request    
+        if($this->input->is_ajax_request()) {
+			// grab the email value from the post variable.
+			$email = $this->input->get('email');
+			$company_id = $this->company_id;
+			
+			// $user_query = $this->db->select('*')->from('users')->where('email', $email)->get();
+			$user_query = $this->db->select('*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("email = '". $email ."' AND user_roles.company_id = ".$company_id)->get();
+			$message = ( $user_query->num_rows() > 0 ) ? 'The email is already taken, choose another one' : '';
+
+		}
+		echo json_encode(array('message' => $message));
+		die();
+    }
+	
+	function create($company_id = FALSE)
+	{	
+		$company_id = $company_id ? $company_id : $this->sessionArr['company_id'];
+		if($_POST){
+			$company_id = $this->company_id;
+			
+			$email_exist = $this->db->select('*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("email = '". $_POST['email'] ."' AND user_roles.company_id = ".$company_id)->get()->num_rows();
+			if($email_exist == 0) {
+				
+				
+				$role_id = $_POST['role_id'];
+
+				unset($_POST['role_id']);
+				unset($_POST['send']);
+				
+				$modules = Module::find('all', array('order' => 'sort asc', 'conditions' => array('type = ?', 'client')));
+				$access = array();
+				foreach ($modules as $key => $value) {
+					$access[] = $value->id;
+				}
+				$_POST["access"] = implode(",", $access);
+						
+				$_POST['status'] = 'inactive';
+				$_POST['admin'] = '0';
+				$_POST = array_map('htmlspecialchars', $_POST);
+				$user = User::create($_POST);	
+				// $client->password = $client->set_password($_POST['password']);
+				$user->save();
+				$insert_id = $user->id;
+				
+				$company_details = array( 'user_id' => $insert_id, 'role_id' => $role_id, 'company_id' => $company_id, 'created_at' => date('Y-m-d H:i:s') );
+				$company_details = array_map('htmlspecialchars', $company_details);
+				$user_role = UserRole::create($company_details);
+				// $client->password = $client->set_password($_POST['password']);
+				$user_role->save();
+				$roles_insert_id = $user_role->id;
+				
+				if(!$user){
+					$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_client_add_error'));
+				} else {
+					// $this->session->set_flashdata('message', 'success:'.$this->lang->line('messages_subcontractor_add_success'));
+					
+					$unique_key = md5(uniqid(rand(), true));
+					$today = date('Y-m-d H:i:s');
+					$invite_url = site_url().'invitation/accept/'.$roles_insert_id.'/'.$company_id.'/'.$unique_key;
+					$invite_token_expiry = strtotime('+2 day', strtotime($today));
+					
+					$user_meta = array(
+						'user_roles_id' => $roles_insert_id,
+						'meta_key' => 'invite_token_'.$company_id,
+						'meta_value' => $unique_key
+					);
+					$this->db->insert('user_meta', $user_meta);
+					
+					$user_meta_2 = array(
+						'user_roles_id' => $roles_insert_id,
+						'meta_key' => 'invite_token_expiry',
+						'meta_value' => $invite_token_expiry
+					);
+					$this->db->insert('user_meta', $user_meta_2);
+					$user_meta_3 = array(
+						'user_roles_id' => $roles_insert_id,
+						'meta_key' => 'invite_token_expiry_status',
+						'meta_value' => ''
+					);
+					$this->db->insert('user_meta', $user_meta_3);
+					
+					// $config['protocol']    = 'smtp';
+					// $config['smtp_host']    = 'ssl://smtp.gmail.com';
+					// $config['smtp_port']    = '465';
+					// $config['smtp_timeout'] = '7';
+					// $config['smtp_user']    = 'emailtesterone@gmail.com';
+					// $config['smtp_pass']    = 'kgn@123456';
+					// $config['charset']    = 'utf-8';
+					// $config['newline']    = "\r\n";
+					// $config['mailtype'] = 'html';
+					// $config['validation'] = TRUE; // bool whether to validate email or not      
+
+					// $this->email->initialize($config);
+					
+					$this->load->library('email');
+					$this->email->from('emailtesterone@gmail.com', trim($_POST['firstname'].' '.$_POST['lastname']));
+					$this->email->to($_POST["email"]);
+					$this->email->subject('Spera Invitation');
+					$this->email->message('Click on <a href="'.$invite_url.'">Spera Invitation Link</a> to complete signup and access your profile.');
+					
+					$created_msg = $this->lang->line('messages_client_add_success');
+					$mail_sent = null;
+					if($this->email->send()) {
+						$mail_sent = 'Invitation mail sent.';
+					}
+					$this->session->set_flashdata('message', 'success:'.$created_msg.' '.$mail_sent);
+				}
+			} else {
+				$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_email_already_taken'));
+			}
+			redirect(base_url().'clients');
+			
+		} else {
+			// $this->view_data['users'] = User::find('all',array('conditions' => array('inactive=?','0')));
+			// $this->view_data['modules'] = Module::find('all', array('order' => 'sort asc', 'conditions' => array('type = ?', 'client')));
+			// $this->view_data['next_reference'] = Client::last();
+			$this->theme_view = 'modal';
+			$this->view_data['title'] = $this->lang->line('application_add_new_client');
+			$this->view_data['form_action'] = base_url().'clients/create/';
+			$this->content_view = 'clients/_client';
+		}	
+	}	
+	
+	function update($id = FALSE, $getview = FALSE)
+	{	
+		if($_POST){
+			$id = $_POST['id'];
+			$user = User::find($id);
+			
+			unset($_POST['send']);
+			/* unset($_POST['userfile']);
+			unset($_POST['file-name']); */
+			if(empty($_POST["password"])){
+				unset($_POST['password']);
+			} else {
+				$_POST['password'] = $user->set_password($_POST['password']);
+			}
+			if(!empty($_POST["access"])){
+				$_POST["access"] = implode(",", $_POST["access"]);
+			}
+			
+			if(isset($_POST['view'])){
+				$view = $_POST['view'];
+				unset($_POST['view']);
+			}
+			$_POST = array_map('htmlspecialchars', $_POST);
+			
+			$user->update_attributes($_POST);
+       		if(!$user){
+				$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_save_client_error'));
+			}
+       		else{
+				$this->session->set_flashdata('message', 'success:'.$this->lang->line('messages_save_client_success'));
+			}
+            
+			redirect(base_url().'clients/view/'.$user->id);
+			
+		}else
+		{
+			// $this->view_data['user'] = User::find_by_sql("SELECT * FROM `users` WHERE admin = '0' AND STATUS = 'active' AND id=".$id);
+			$company_id = $this->company_id;
+			$this->view_data['user'] = $this->db->select('*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("admin = '0' AND status = 'active' AND users.id=".$id." AND company_id=".$company_id." AND users.id=".$id)->get()->row_object();
+			// $this->view_data['modules'] = Module::find('all', array('order' => 'sort asc', 'conditions' => array('type = ?', 'client')));
+			if($getview == "view"){$this->view_data['view'] = "true";}
+			$this->theme_view = 'modal';
+			$this->view_data['title'] = $this->lang->line('application_edit_client');
+			$this->view_data['form_action'] = base_url().'clients/update';
+			$this->content_view = 'clients/_client';
+		}	
+	}
+		
+	function delete($id = FALSE)
+	{	
+		$user = User::find($id);
+		$user->status = 'deleted';
+		$user->save();
+		$this->content_view = 'clients/all';
+		if(!$user){
+			$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_delete_a_user_error'));
+		} else { 
+			$this->session->set_flashdata('message', 'success:'.$this->lang->line('messages_delete_user_success'));
+		}
+		redirect(base_url().'clients');
+	}	
+	
+	function view($id = FALSE)
+	{
+		// $this->view_data['company'] = Company::find($id);
+		$company_id = $this->sessionArr['company_id'];
+		if( !empty( $company_id ) ){
+			$user_query = $this->db->select('*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("admin = '0' AND users.id=".$id." AND company_id=".$company_id)->get();
+			// $this->db->select('*')->from('users')->where("admin = '0' AND STATUS = 'active' AND id=".$id);
+			// $user_query = $this->db->get();
+			if ( $user_query->num_rows() > 0 ) {
+				$user_data = $user_query->row_object();
+				$user_role = $this->db->select('*')->from('roles')->where("role_id = ".$user_data->role_id)->get()->row_object();
+				$user_data->role_name = $user_role->roles;
+				$this->view_data['user'] = $user_data;
+				$this->content_view = 'clients/view';
+			} else {
+				redirect(base_url().'clients');
+			}
+			
+		}else{
+			redirect(base_url().'clients');
+		}
+		
+	}
+		
+}

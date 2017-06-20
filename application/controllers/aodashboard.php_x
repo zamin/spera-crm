@@ -1,0 +1,124 @@
+<?php
+/**
+ * ClassName: Account Owner Dashboard
+ * Function Name: index 
+ * This class is used for account owner dashboard
+ **/
+if (!defined('BASEPATH'))
+    exit('No direct script access allowed');
+
+class Aodashboard extends MY_Controller {
+    function __construct() {
+        parent::__construct();
+        if (!$this->user) {
+            $this->view_data['error'] = "true";
+            $this->session->set_flashdata('message', 'error: You have no access to any modules!');
+            if($this->cid){redirect($this->cid);}else{redirect('login');}
+        }
+        $this->theme_view = 'application_owner';
+        $access = $this->view_data['core_settings']->default_account_owner_modules;
+        $access = explode(",", $access);
+        $email = 'ao' . $this->user->id;
+        $this->view_data['menu'] = Module::find('all', array('order' => 'sort asc', 'conditions' => array('id in (?) AND type = ?', $access, 'account-owner')));
+        $this->view_data['module_permissions'] = array();
+        //var_dump( $this->view_data['menu']);exit;
+        foreach ($this->view_data['menu'] as $key => $value) {
+            array_push($this->view_data['module_permissions'], $value->link);
+        }
+        $this->load->helper('url');
+    }
+
+    //account owner role activities
+    function index($cid,$year=FALSE) {
+        
+        if(!$cid) {
+            $this->view_data['error'] = "true";
+            $this->session->set_flashdata('message', 'error: You have no access to any modules!');
+            redirect('login');
+        }
+        $company_name=Company::find($cid);
+        $cname = $company_name->name;
+        
+        $sessionArr = $this->session->userdata[$cid];
+        $sessionArr['company_name'] = $cname;
+        $this->session->set_userdata($cid,$sessionArr);
+        
+        $sessionArr = $this->session->userdata[$cid];
+        
+        $this->view_data['company_id']=$sessionArr['company_id'];
+        $this->view_data['company_name']=$sessionArr['company_name'];
+        $this->view_data['role_id']=$sessionArr['role_id'];
+        $this->view_data['user_id']=$sessionArr['user_id'];
+        $this->view_data['email']=$sessionArr['email'];
+        
+        //Events
+        $events = array();
+        $date = date('Y-m-d', time());
+        $eventcount = 0;
+        //var_dump($this->session);exit;
+        if (in_array("aoprojects", $this->view_data['module_permissions'])) {
+            //echo "fsf";exit;
+            $sql = 'Select t.* from project_has_tasks t left join projects p on t.project_id=p.id left join user_roles r on t.user_id=r.user_id where r.user_id='.$sessionArr['user_id'].' and r.role_id='.$sessionArr['role_id'].' and p.company_id='.$cid.' and t.progress < 100 order by p.id desc';
+
+            $taskquery = ProjectHasTask::find_by_sql($sql);
+            $this->view_data["tasks"] = $taskquery;
+        }
+//        $thismonth = date('m');
+//        $yearMonth = $year . '-' . $thismonth;
+//        // View Values
+//        $this->view_data["month"] = date('M');
+//        $this->view_data["year"] = $year;
+
+
+        // Projects Stats
+        $open_projects = Project::find_by_sql('Select count(*) as opcount from projects p left join user_roles r on p.company_id=r.company_id where r.user_id='.$this->session->userdata('user_id').' and r.role_id='.$this->session->userdata('role_id').' and p.company_id='.$cid.' and progress < 100 group by p.id order by p.id desc');
+        if (!empty($open_projects[0]->opcount)) {
+            $this->view_data["projects_open"] = $open_projects[0]->opcount;
+        } else {
+            $this->view_data["projects_open"] = 0;
+        }
+
+        $all_projects = Project::find_by_sql('Select count(*) as pcount from projects p left join user_roles r on p.company_id=r.company_id where r.user_id='.$this->session->userdata('user_id').' and r.role_id='.$this->session->userdata('role_id').' and p.company_id='.$cid.' group by p.id order by p.id desc');
+        //var_dump($all_projects);exit;
+        if (!empty($all_projects[0]->pcount)) {
+            $this->view_data["projects_all"] = $all_projects[0]->pcount;
+        } else {
+            $this->view_data["projects_all"] = 0;
+        }
+        
+        // Invoices Stats	
+        $this->view_data["invoices_open"] = Invoice::count(array('conditions' => array('status != ? AND status != ? AND estimate != ? AND user_id = ?', 'Paid', 'Canceled', 1, $this->user->id))); // Get all but canceled and Paid invoices
+        $this->view_data["invoices_all"] = Invoice::count(array('conditions' => array('status != ? AND estimate != ? AND user_id = ?', 'Canceled', 1, $this->user->id))); // Get all but canceled invoices
+
+//        $this->view_data["stats"] = Invoice::getStatisticForYearByUserId($this->user->id, $year);
+//        //var_dump($this->view_data["stats"]);exit;
+//        $this->view_data["stats_expenses"] = Invoice::getExpensesStatisticForYearByUserId($this->user->id, $year);
+//        $this->view_data["payments"] = Invoice::paymentsForMonthByUserId($this->user->id, $currentYearMonth);
+//        $this->view_data["paymentsOutstandingMonth"] = Invoice::outstandingPaymentsByUserId($this->user->id, $currentYearMonth);
+//        //var_dump($this->view_data["paymentsOutstandingMonth"]);exit;
+//        $this->view_data["paymentsoutstanding"] = Invoice::outstandingPaymentsByUserId($this->user->id);
+//        $this->view_data["totalExpenses"] = Invoice::totalExpensesForYearByUserId($this->user->id, $year);
+//        $this->view_data["totalIncomeForYear"] = Invoice::totalIncomeForYearByUserId($this->user->id, $year);
+//        $this->view_data["totalProfit"] = $this->view_data["totalIncomeForYear"] - $this->view_data["totalExpenses"];
+//        $this->view_data["paymentsForThisMonthInPercent"] = ($this->view_data["payments"] == 0) ? 0 : @round($this->view_data["payments"] / $this->view_data["paymentsOutstandingMonth"] * 100);
+//        $this->view_data["openProjectsPercent"] = ($this->view_data["projects_open"] == 0) ? 0 : @round($this->view_data["projects_open"] / $this->view_data["projects_all"] * 100);
+//        $this->view_data["openInvoicePercent"] = ($this->view_data["invoices_open"] == 0) ? 0 : @round($this->view_data["invoices_open"] / $this->view_data["invoices_all"] * 100);
+//        $this->view_data["paymentsOutstandingPercent"] = ($this->view_data["paymentsoutstanding"] == 0) ? 0 : @round($this->view_data["paymentsoutstanding"] / $this->view_data["totalIncomeForYear"] * 100);
+//        $this->view_data["paymentsOutstandingPercent"] = ($this->view_data["paymentsOutstandingPercent"] > 100) ? 100 : $this->view_data["paymentsOutstandingPercent"];
+        $this->view_data['tickets_access'] = false;
+        
+        if (in_array("aotickets", $this->view_data['module_permissions'])) {
+            $this->view_data['tickets_access'] = true;
+            $tickets_new=Ticket::find_by_sql('SELECT count(*) as new_tickets from tickets t left join user_roles r on t.company_id=r.company_id where t.company_id="'.$cid.'" and t.user_id="'.$this->user->id.'" and r.role_id="'.$sessionArr['role_id'].'"');
+            $this->view_data['tickets_new'] = $tickets_new[0]->new_tickets;
+        }
+        
+        //get new tickets
+        $this->view_data['ticket'] = Ticket::find_by_sql('SELECT t.* from tickets t left join user_roles r on t.company_id=r.company_id where t.status !="closed" and t.company_id="'.$cid.'" and r.role_id="'.$sessionArr['role_id'].'" limit 5');
+        $all_tickets = Ticket::find_by_sql('SELECT count(*) as ticket_count from tickets t left join user_roles r on t.company_id=r.company_id where t.status !="closed" and t.company_id="'.$cid.'" and r.role_id="'.$sessionArr['role_id'].'"');
+        $this->view_data['ticketcounter'] = $all_tickets[0]->ticket_count;
+        $this->view_data['recent_activities'] = ProjectHasActivity::find_by_sql('SELECT p.* from project_has_activities p left join user_roles r on p.user_id=r.user_id where r.company_id="'.$cid.'" order by p.datetime desc limit 10'); //TODO
+        
+        $this->content_view = 'dashboard/aodashboard';
+    }
+}

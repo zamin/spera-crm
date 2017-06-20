@@ -1,0 +1,267 @@
+<?php
+
+/**
+ * ClassName: aoexpenses
+ * Function Name: ____construct 
+ * This class is used for account owner expenses
+ **/
+
+if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Aoexpenses extends MY_Controller {
+               
+	function __construct()
+	{
+		//echo 'reach here';die;
+       parent::__construct();
+       if (!$this->user) {
+            $this->view_data['error'] = "true";
+            $this->session->set_flashdata('message', 'error: You have no access to any modules!');
+            redirect('login');
+        }
+        if(!$this->sessionArr['company_id']) {
+            $this->view_data['error'] = "true";
+            $this->session->set_flashdata('message', 'error: You have no access to any modules!');
+            redirect('login');
+        }
+        $this->company_id = ($this->sessionArr['company_id']) ? $this->sessionArr['company_id'] : 0;
+
+        $this->load->database();
+		//$user_login_id = $this->user->id;
+        
+	}	
+
+	function index()
+	{
+		//$this->view_data['userlist'] = User::find('all', array('conditions' => array('status = ?', 'active')));
+		$this->view_data['user_id'] = $this->user->id;
+		$this->view_data['year'] = date("Y");
+		$this->view_data['month'] = 0;
+		$year = date("Y");
+		
+		//statistic
+		$graph_month = date('m');
+		$days_in_this_month = days_in_month($graph_month, $year);
+		$lastday_in_month =  strtotime($year."-12-31");
+		$firstday_in_month =  strtotime($year."-01-01");
+		$this->view_data['days_in_this_month'] = 12;
+		$this->view_data['expenses_this_month'] = Expense::count(array('conditions' => 'UNIX_TIMESTAMP(`date`) <= '.$lastday_in_month.' and UNIX_TIMESTAMP(`date`) >= '.$firstday_in_month.' and user_id='.$this->user->id));
+		$this->view_data['expenses_owed_this_month'] = Expense::find_by_sql('select sum(value) AS "owed" from expenses where UNIX_TIMESTAMP(`date`) >= "'.$firstday_in_month.'" AND UNIX_TIMESTAMP(`date`) <= "'.$lastday_in_month.'" and user_id= '.$this->user->id);	
+		$this->view_data['expenses_due_this_month_graph'] = Expense::find_by_sql('select sum(value) AS "owed", MONTH(`date`) as `date` from expenses where user_id='.$this->user->id .' and UNIX_TIMESTAMP(`date`) >= "'.$firstday_in_month.'" AND UNIX_TIMESTAMP(`date`) <= "'.$lastday_in_month.'" Group By MONTH(`date`)');
+
+		$this->view_data['expenses'] = Expense::find('all', array('conditions' => array("date >= '$year-01-01' and date <= '$year-12-31' and user_id=".$this->user->id)));
+		
+
+		$this->content_view = 'expenses/accountowner_views/all';
+	}
+
+	function filter($userid = FALSE, $year = FALSE, $month = FALSE)
+	{
+		//echo $userid;die;
+		$this->view_data['userlist'] = User::find('all', array('conditions' => array('status = ?', 'active')));
+		$this->view_data['username'] = User::find_by_id($userid);
+		$this->view_data['user_id'] = $userid;
+		$this->view_data['year'] = $year;
+		$this->view_data['month'] = $month;
+
+		$search = "";
+		$stats_search = "";
+		if($userid){
+			$search .= "user_id = $userid and "; 
+			$stats_search = " AND user_id = $userid ";
+		}
+		if($month && $year){
+			$search .= "date >= '$year-$month-01' and date <= '$year-$month-31'";
+		}else{
+			$search .= "date >= '$year-01-01' and date <= '$year-12-31' ";
+		}
+		//statistic
+		$graph_month = $month != 0 ? $month : date('m');
+		if($month == 0)
+		{
+
+		$lastday_in_month =  strtotime($year."-12-31");
+		$firstday_in_month =  strtotime($year."-01-01");
+		$this->view_data['days_in_this_month'] = 12;
+		$this->view_data['expenses_this_month'] = Expense::count(array('conditions' => 'UNIX_TIMESTAMP(`date`) <= '.$lastday_in_month.' and UNIX_TIMESTAMP(`date`) >= '.$firstday_in_month.$stats_search.' and user_id='.$this->user->id));
+		$this->view_data['expenses_owed_this_month'] = Expense::find_by_sql('select sum(value) AS "owed" from expenses where UNIX_TIMESTAMP(`date`) >= "'.$firstday_in_month.'" AND UNIX_TIMESTAMP(`date`) <= "'.$lastday_in_month.'"'.$stats_search .' and user_id='.$this->user->id);	
+		//echo '<pre>';print_r($this->view_data['expenses_owed_this_month']);die;
+		$this->view_data['expenses_due_this_month_graph'] = Expense::find_by_sql('select sum(value) AS "owed", MONTH(`date`) as `date` from expenses where user_id='.$this->user->id.' and UNIX_TIMESTAMP(`date`) >= "'.$firstday_in_month.'" AND UNIX_TIMESTAMP(`date`) <= "'.$lastday_in_month.'"'.$stats_search.' Group By MONTH(`date`) ');
+			//var_dump($this->view_data['	']);die;
+		
+
+		}
+		else
+		{
+			$days_in_this_month = days_in_month($graph_month, $year);
+			$lastday_in_month =  date('Y-m-d',strtotime($year."-".$graph_month."-".$days_in_this_month));
+			$firstday_in_month =  date('Y-m-d',strtotime($year."-".$graph_month."-01"));
+			$this->view_data['days_in_this_month'] = $days_in_this_month;
+	
+			/*echo 'UNIX_TIMESTAMP(`date`) <= '.$lastday_in_month.' and UNIX_TIMESTAMP(`date`) >= '.$firstday_in_month.$stats_search.' and user_id='.$this->user->id;*/
+			$expenses_this_month = $this->db->query("SELECT count(*) as owed FROM `expenses` WHERE date >= '".$firstday_in_month."' and date <= '".$lastday_in_month."' and user_id='".$this->sessionArr['user_id']."'")->row_array();
+			$this->view_data['expenses_this_month'] = $expenses_this_month['owed'];
+			//var_dump($this->view_data['expenses_this_month']);die;
+			$expenses_owed_this_month = $this->db->query("SELECT SUM(value) as owed FROM `expenses` WHERE date >= '".$firstday_in_month."' and date <= '".$lastday_in_month."' and user_id='".$this->sessionArr['user_id']."'")->result();
+			$this->view_data['expenses_owed_this_month'] = $expenses_owed_this_month;
+			//var_dump($expenses_owed_this_month['owed']);die;
+			$this->view_data['expenses_due_this_month_graph'] = $this->db->query('SELECT SUM(value) as `owed`, DATE_FORMAT(`date`, "%Y-%m-%c") as date FROM `expenses` WHERE date >= "'.$firstday_in_month.'" and date <= "'.$lastday_in_month.'" and user_id="'.$this->sessionArr['user_id'].'" Group By date')->result();
+			//print_r($this->view_data['expenses_due_this_month_graph']);die;
+			/*$this->view_data['expenses_due_this_month_graph'] = Expense::find_by_sql('SELECT SUM(value) as `owed`, date as date FROM `expenses` WHERE date >= "'.$firstday_in_month.'" and date <= "'.$lastday_in_month.'" and user_id="'.$this->sessionArr['user_id'].'" Group By date');*/
+			//var_dump($this->view_data['expenses_due_this_month_graph']);die;
+
+			/*$this->view_data['expenses_due_this_month_graph'] = Expense::find_by_sql('select sum(value) AS "owed", `date` from expenses where UNIX_TIMESTAMP(`date`) >= "'.$firstday_in_month.'" AND UNIX_TIMESTAMP(`date`) <= "'.$lastday_in_month.'"'.$stats_search.' Group By `date`');*/
+		}
+		//echo $search;die;
+		$this->view_data['expenses'] = Expense::find('all', array('conditions' => array("$search")));
+		$this->content_view = 'expenses/accountowner_views/all';
+	}
+
+	function create()
+	{	
+		//echo 'reach';die;
+		if($_POST){
+			unset($_POST['send']);
+			unset($_POST['_wysihtml5_mode']);
+			unset($_POST['files']);
+
+			$config['upload_path'] = './files/media/';
+					$config['encrypt_name'] = TRUE;
+					$config['allowed_types'] = '*';
+
+					$this->load->library('upload', $config);
+
+					if ($this->upload->do_upload())
+
+						{
+							$data = array('upload_data' => $this->upload->data());
+
+							if($_POST['attachment_description'] == ""){
+								$_POST['attachment_description'] = $data['upload_data']['orig_name'];
+							}
+							$_POST['attachment'] = $data['upload_data']['file_name'];
+						}
+
+			//echo '<pre>';print_r($_POST);die;
+			$expense = Expense::create($_POST);
+
+       		if(!$expense){$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_create_expense_error'));}
+       		else{$this->session->set_flashdata('message', 'success:'.$this->lang->line('messages_create_expense_success'));}
+			redirect('aoexpenses');
+		}else
+		{
+			$this->view_data['expenses'] = Expense::all();
+			$this->view_data['next_reference'] = Expense::last();
+			//echo $this->user->admin;
+			if($this->user->admin != 0){
+				$this->view_data['projects'] = (array) $this->user->projects;
+				$this->view_data['companies'] = $this->user->companies;
+			}else{
+				$this->view_data['projects'] = $this->get_projects();
+				$this->view_data['companies'] = Company::find('all',array('conditions' => array('inactive=?','0')));
+			}
+			
+			//$this->view_data['core_settings'] = Setting::first();
+			
+			
+			$this->theme_view = 'modal';
+			$this->view_data['categories'] = Expense::find_by_sql("select category from expenses group by category");
+			$this->view_data['title'] = $this->lang->line('application_create_expense');
+			$this->view_data['form_action'] = base_url().'aoexpenses/create';
+			$this->content_view = 'expenses/accountowner_views/_expense';
+		}	
+	}	
+
+	function update($id = FALSE, $getview = FALSE)
+	{	
+		if($_POST){
+			unset($_POST['send']);
+			unset($_POST['_wysihtml5_mode']);
+			unset($_POST['files']);
+
+			$config['upload_path'] = './files/media/';
+					$config['encrypt_name'] = TRUE;
+					$config['allowed_types'] = '*';
+
+					$this->load->library('upload', $config);
+
+					if ($this->upload->do_upload())
+
+						{
+							$data = array('upload_data' => $this->upload->data());
+
+							if($_POST['attachment_description'] == ""){
+								$_POST['attachment_description'] = $data['upload_data']['orig_name'];
+							}
+							$_POST['attachment'] = $data['upload_data']['file_name'];
+						}
+
+			$id = $_POST['id'];
+
+			$expense = Expense::find_by_id($id);
+			$expense->update_attributes($_POST);
+			
+       		if(!$expense){$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_save_expense_error'));}
+       		else{$this->session->set_flashdata('message', 'success:'.$this->lang->line('messages_save_expense_success'));}
+			redirect('aoexpenses');
+			
+		}else
+		{
+			$this->view_data['next_reference'] = Expense::last();
+			$this->view_data['expense'] = Expense::find_by_id($id);
+			$this->view_data['projects'] = $this->get_projects();
+			$this->view_data['core_settings'] = Setting::first();
+			$this->view_data['companies'] = Company::find('all',array('conditions' => array('inactive=?','0')));
+			$this->theme_view = 'modal';
+			$this->view_data['categories'] = Expense::find_by_sql("select category from expenses group by category");
+			$this->view_data['title'] = $this->lang->line('application_create_expense');
+			$this->view_data['form_action'] = base_url().'aoexpenses/update';
+			$this->content_view = 'expenses/accountowner_views/_expense';
+		}	
+	}	
+
+	function attachment($id = FALSE){
+		$this->load->helper('file');
+		$media = Expense::find_by_id($id);
+
+        $file = './files/media/'.$media->attachment;
+		$mime = get_mime_by_extension($file);
+
+		if(file_exists($file)) {
+            header('Content-Description: File Transfer');
+            header('Content-Type: '.$mime);
+            header('Content-Disposition: attachment; filename='.basename($file));
+            header('Content-Transfer-Encoding: binary');
+            header('Expires: 0');
+            header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+            header('Pragma: public');
+            header('Content-Length: ' . filesize($file));
+            readfile($file);
+            ob_clean();
+            flush();
+            exit; 
+        }
+	}
+	
+	
+
+	function delete($id = FALSE)
+	{	
+		$expense = Expense::find($id);
+		$expense->delete();
+		$this->content_view = 'expenses/accountowner_views/all';
+		if(!$expense){$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_delete_expense_error'));}
+       		else{$this->session->set_flashdata('message', 'success:'.$this->lang->line('messages_delete_expense_success'));}
+			redirect('aoexpenses');
+	}
+	
+	function get_projects() {
+		/*echo $this->user->id;
+		echo $this->company_id;die;*/
+
+		return $this->db->query( "SELECT p.* FROM projects as p JOIN companies AS c ON c.id = p.company_id JOIN users AS u ON ( u.id = c.user_id ) WHERE c.user_id = ". $this->user->id ." AND p.company_id = ". $this->company_id )->result();
+	}
+	
+	
+	
+}

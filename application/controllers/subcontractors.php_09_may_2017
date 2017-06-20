@@ -1,0 +1,556 @@
+<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+class Subcontractors extends MY_Controller {
+           
+	public $company_id;
+	function __construct()
+	{
+		parent::__construct();
+		$access = FALSE;
+		if(!$this->user){
+			if($this->cid){redirect($this->cid);}else{redirect('login');}
+		}
+		#set default value if found null from session
+		$this->company_id = 0;
+		$this->company_id = $this->sessionArr['company_id'];
+		$this->load->database();
+		$this->settings = Setting::first();
+	}	
+	
+	function index()
+	{
+		$company_id = $this->company_id;
+		$this->view_data['sub_contractor_title'] = 'Subcontractors';
+		$this->view_data['subcontractors'] = null;
+		$this->view_data['owner_id'] = $this->sessionArr['user_id'];
+                $this->view_data['company_id'] = $this->sessionArr['company_id'];
+		if( !empty( $company_id ) ){
+			$subcontractor_query = $this->db->select('*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("admin = '0' AND users.status IN ('active', 'inactive') AND user_roles.role_id = 4 AND company_id = ".$company_id)->get();
+			if( $subcontractor_query->num_rows() > 0 ) {
+				$this->view_data['subcontractors'] = $subcontractor_query->result_object();
+			}
+		}
+		$this->content_view = 'subcontractors/all';	
+	}
+	
+	function email_check()
+    {
+		$message = '';
+        // allow only Ajax request    
+        if($this->input->is_ajax_request()) {
+			// grab the email value from the post variable.
+			$email = $this->input->get('email');
+			$company_id = $this->company_id;
+			
+			// $user_query = $this->db->select('*')->from('users')->where('email', $email)->get();
+			$user_query = $this->db->select('*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("email = '". $email ."' AND user_roles.company_id = ".$company_id)->get();
+			$message = ( $user_query->num_rows() > 0 ) ? 'The email is already taken, choose another one' : '';
+			
+			if($user_query->num_rows() > 0){
+				$user_query_del = $this->db->select('*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("email = '". $email ."' AND status = 'deleted' AND user_roles.company_id = ".$company_id)->get();
+				if($user_query_del->num_rows() > 0){
+					$message = 'This email is already registered, Do you want to restore ?';
+				} else {
+					$message = 'This email is already taken, choose another one';
+				}
+				//echo json_encode(array('message' => $message));		
+			}
+		}
+		echo json_encode(array('message' => $message));
+		die();
+    }
+	
+	function create($company_id = FALSE)
+	{	
+		$get_company=Company::find_by_id($this->sessionArr['company_id']);
+        $this->view_data['name_of_company']=$get_company->name;
+		$company_id = $company_id ? $company_id : $this->sessionArr['company_id'];
+		if($_POST){
+			$company_id = $this->company_id;
+			
+			$email_exist = $this->db->select('*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("email = '". $_POST['email'] ."' AND user_roles.company_id = ".$company_id)->get()->num_rows();
+			if($email_exist == 0) {
+				
+				
+				$role_id = $_POST['role_id'];
+
+				unset($_POST['role_id']);
+				unset($_POST['send']);
+				
+				$modules = Module::find('all', array('order' => 'sort asc', 'conditions' => array('type = ?', 'sub-contractor')));
+				$access = array();
+				foreach ($modules as $key => $value) {
+					$access[] = $value->id;
+				}
+				$_POST["access"] = implode(",", $access);
+				
+				$_POST['status'] = 'inactive';
+				$_POST['admin'] = '0';
+				$_POST = array_map('htmlspecialchars', $_POST);
+				$user = User::create($_POST);	
+				// $client->password = $client->set_password($_POST['password']);
+				$user->save();
+				$insert_id = $user->id;
+				
+				$company_details = array( 'user_id' => $insert_id, 'role_id' => $role_id, 'company_id' => $company_id );
+				$company_details = array_map('htmlspecialchars', $company_details);
+				$user_role = UserRole::create($company_details);
+				// $client->password = $client->set_password($_POST['password']);
+				$user_role->save();
+				$roles_insert_id = $user_role->id;
+				
+				if(!$user){
+					$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_subcontractor_add_error'));
+				} else {
+					// $this->session->set_flashdata('message', 'success:'.$this->lang->line('messages_subcontractor_add_success'));
+					
+					$unique_key = md5(uniqid(rand(), true));
+					$today = date('Y-m-d H:i:s');
+					$invite_token_expiry = strtotime('+2 day', strtotime($today));
+					$invite_url = site_url().'invitation/accept/'.$roles_insert_id.'/'.$company_id.'/'.$unique_key;
+					
+					$user_meta = array(
+						'user_roles_id' => $roles_insert_id,
+						'meta_key' => 'invite_token_'.$company_id,
+						'meta_value' => $unique_key
+					);
+					$this->db->insert('user_meta', $user_meta);
+					
+					$user_meta_2 = array(
+						'user_roles_id' => $roles_insert_id,
+						'meta_key' => 'invite_token_expiry',
+						'meta_value' => $invite_token_expiry
+					);
+					$this->db->insert('user_meta', $user_meta_2);
+					$user_meta_3 = array(
+						'user_roles_id' => $roles_insert_id,
+						'meta_key' => 'invite_token_expiry_status',
+						'meta_value' => ''
+					);
+					$this->db->insert('user_meta', $user_meta_3);
+					
+					/* $config['protocol']    = 'smtp';
+					$config['smtp_host']    = 'ssl://smtp.gmail.com';
+					$config['smtp_port']    = '465';
+					$config['smtp_timeout'] = '7';
+					$config['smtp_user']    = 'emailtesterone@gmail.com';
+					$config['smtp_pass']    = 'kgn@123456';
+					$config['charset']    = 'utf-8';
+					$config['newline']    = "\r\n";
+					$config['mailtype'] = 'html';
+					$config['validation'] = TRUE; // bool whether to validate email or not      
+
+					$this->email->initialize($config);
+					
+					$this->load->library('email');
+					$this->email->from('emailtesterone@gmail.com', trim($_POST['firstname'].' '.$_POST['lastname']));
+					$this->email->to($_POST["email"]);
+					$this->email->subject('Spera Invitation');
+					$this->email->message('Click on <a href="'.$invite_url.'">Spera Invitation Link</a> to complete signup and access your profile.'); */
+					
+					$created_msg = $this->lang->line('messages_subcontractor_add_success');
+					$mail_sent = null;
+					// if($this->email->send()) {
+					if($this->invite_mail($invite_url, $_POST)) {
+						$mail_sent = 'Invitation mail sent.';
+					}
+					$this->session->set_flashdata('message', 'success:'.$created_msg.' '.$mail_sent);
+				}
+			} else {
+				//$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_email_already_taken'));
+				
+				$email_exist = $this->db->select('*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("email = '". $_POST['email'] ."' AND status = 'deleted' AND user_roles.company_id = ".$company_id )->get()->row_object();
+				$user = User::find($email_exist->user_id);
+				
+				if(!empty($user)){
+					$_POST['status'] = 'inactive';
+					$_POST['hashed_password'] = null;
+					unset($_POST['send']);
+					$_POST = array_map('htmlspecialchars', $_POST);
+					unset($_POST['role_id']);
+					$user->update_attributes($_POST);
+					
+					
+					$roles_insert_id = $email_exist->role_id;
+					
+					$company_id = $email_exist->company_id;
+					
+					$user_data = $this->db->select('*,user_roles.id as user_roles_id')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("admin = '0' AND role_id = ".$roles_insert_id." AND user_roles.company_id=".$company_id." AND users.id=".$email_exist->user_id)->get()->row_array();
+					$roles_user_id = $user_data['user_roles_id'];
+					
+					$unique_key = md5(uniqid(rand(), true));
+					$today = date('Y-m-d H:i:s');
+					$invite_token_expiry = strtotime('+2 day', strtotime($today));
+					$invite_url = site_url().'invitation/accept/'.$roles_user_id.'/'.$company_id.'/'.$unique_key;
+					
+					$user_token = $this->db->select('*')->from('user_meta')->where("user_roles_id = ".$roles_user_id." AND meta_key = 'invite_token_".$company_id."'")->get()->num_rows();
+					$user_meta = array(
+						'user_roles_id' => $roles_user_id,
+						'meta_key' => 'invite_token_'.$company_id,
+						'meta_value' => $unique_key
+					);
+					if($user_token == 0)
+					{
+						$this->db->insert('user_meta', $user_meta);
+					}
+					else
+					{
+						$this->db->where('user_roles_id', $roles_user_id);
+						$this->db->where('meta_key', 'invite_token_'.$company_id);
+						$this->db->update('user_meta', $user_meta);
+					}
+					
+					$user_token_expiry = $this->db->select('*')->from('user_meta')->where("user_roles_id = ".$roles_user_id." AND meta_key = 'invite_token_expiry'")->get()->num_rows();
+					$user_meta1 = array(
+						'user_roles_id' => $roles_user_id,
+						'meta_key' => 'invite_token_expiry',
+						'meta_value' => $invite_token_expiry
+					);
+					if($user_token_expiry == 0)
+					{
+						$this->db->insert('user_meta', $user_meta1);
+					}
+					else
+					{
+						$this->db->where('user_roles_id', $roles_user_id);
+						$this->db->where('meta_key', 'invite_token_expiry');
+						$this->db->update('user_meta', $user_meta1);
+					}
+					
+					$user_token_expiry_status = $this->db->select('*')->from('user_meta')->where("user_roles_id = ".$roles_user_id." AND meta_key = 'invite_token_expiry_status'")->get()->num_rows();
+					$user_meta2 = array(
+						'user_roles_id' => $roles_user_id,
+						'meta_key' => 'invite_token_expiry_status',
+						'meta_value' => ''
+					);
+					if($user_token_expiry == 0)
+					{
+						$this->db->insert('user_meta', $user_meta2);
+					}
+					else
+					{
+						$this->db->where('user_roles_id', $roles_user_id);
+						$this->db->where('meta_key', 'invite_token_expiry_status');
+						$this->db->update('user_meta', $user_meta2);
+					}
+					
+					$created_msg = $this->lang->line('messages_subcontractor_add_success');
+					$mail_sent = null;
+					// if($this->email->send()) {
+					if($this->invite_mail($invite_url, $_POST)) {
+						$mail_sent = 'Invitation mail sent.';
+					}
+					$this->session->set_flashdata('message', 'success:'.$created_msg.' '.$mail_sent);
+				} else {	 
+					$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_email_already_taken'));
+				}	
+				
+			}
+			redirect(base_url().'subcontractors');
+			
+		} else {
+			// $this->view_data['users'] = User::find('all',array('conditions' => array('inactive=?','0')));
+			// $this->view_data['modules'] = Module::find('all', array('order' => 'sort asc', 'conditions' => array('type = ?', 'client')));
+			// $this->view_data['next_reference'] = Client::last();
+			$this->theme_view = 'modal';
+			$this->view_data['title'] = $this->lang->line('application_create_subcontractor');
+			$this->view_data['form_action'] = base_url().'subcontractors/create/';
+			$this->content_view = 'subcontractors/_subcontractor';
+		}	
+	}	
+	
+	function update($id = FALSE, $getview = FALSE)
+	{	
+		$get_company=Company::find_by_id($this->sessionArr['company_id']);
+        $this->view_data['name_of_company']=$get_company->name;
+		if($_POST){
+			
+			$id = $_POST['id'];
+			$user = User::find($id);
+			
+			unset($_POST['send']);
+			/* unset($_POST['userfile']);
+			unset($_POST['file-name']); */
+			if(empty($_POST["password"])){
+				unset($_POST['password']);
+			} else {
+				$_POST['password'] = $user->set_password($_POST['password']);
+			}
+			if(!empty($_POST["access"])){
+				$_POST["access"] = implode(",", $_POST["access"]);
+			}
+			
+			if(isset($_POST['view'])){
+				$view = $_POST['view'];
+				unset($_POST['view']);
+			}
+			$_POST = array_map('htmlspecialchars', $_POST);
+			
+			$user->update_attributes($_POST);
+       		if(!$user){
+				$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_save_subcontractor_error'));
+			}
+       		else{
+				$this->session->set_flashdata('message', 'success:'.$this->lang->line('messages_save_subcontractor_success'));
+			}
+            
+			redirect(base_url().'subcontractors/view/'.$user->id);
+			
+		}else
+		{
+			// $this->view_data['user'] = User::find_by_sql("SELECT * FROM `users` WHERE admin = '0' AND STATUS = 'active' AND id=".$id);
+			$company_id = $this->company_id;
+			$this->view_data['user'] = $this->db->select('*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("admin = '0' AND status = 'active' AND company_id=".$company_id." AND users.id=".$id)->get()->row_object();
+			// $this->view_data['modules'] = Module::find('all', array('order' => 'sort asc', 'conditions' => array('type = ?', 'client')));
+			if($getview == "view"){$this->view_data['view'] = "true";}
+			$this->theme_view = 'modal';
+			$this->view_data['title'] = $this->lang->line('application_edit_subcontractor');
+			$this->view_data['form_action'] = base_url().'subcontractors/update';
+			$this->content_view = 'subcontractors/_subcontractor';
+		}	
+	}
+		
+	function delete($id = FALSE)
+	{	
+		$user = User::find($id);
+		$user->status = 'deleted';
+		$user->save();
+		$this->content_view = 'subcontractors/all';
+		if(!$user){
+			$this->session->set_flashdata('message', 'error:'.$this->lang->line('messages_delete_a_user_error'));
+		} else { 
+			$this->session->set_flashdata('message', 'success:'.$this->lang->line('messages_delete_user_success'));
+		}
+		redirect(base_url().'subcontractors');
+	}	
+	
+	function view($id = FALSE)
+	{
+		// $this->view_data['company'] = Company::find($id);
+		$company_id = $this->sessionArr['company_id'];
+		if( !empty( $company_id ) ){
+			$user_query = $this->db->select('*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("admin = '0' AND users.id=".$id." AND company_id=".$company_id)->get();
+			// $this->db->select('*')->from('users')->where("admin = '0' AND STATUS = 'active' AND id=".$id);
+			// $user_query = $this->db->get();
+			if ( $user_query->num_rows() > 0 ) {
+				$user_data = $user_query->row_object();
+				$user_role = $this->db->select('*')->from('roles')->where("role_id = ".$user_data->role_id)->get()->row_object();
+				$user_data->role_name = $user_role->roles;
+				$this->view_data['user'] = $user_data;
+				$this->content_view = 'subcontractors/view';
+			} else {
+				redirect(base_url().'subcontractors');
+			}
+			
+		}else{
+			redirect(base_url().'subcontractors');
+		}
+		
+	}
+	
+	function invite($id = FALSE) {
+		$company_id = $this->company_id;
+		$user_data = $this->db->select('*,user_roles.id as user_roles_id')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("admin = '0' AND role_id = ".$_REQUEST['role']." AND user_roles.company_id=".$company_id." AND users.id=".$id)->get()->row_array();
+		
+		$unique_key = md5(uniqid(rand(), true));
+		$today = date('Y-m-d H:i:s');
+		$invite_token_expiry = strtotime('+2 day', strtotime($today));
+		$invite_url = site_url().'invitation/accept/'.$user_data['user_roles_id'].'/'.$company_id.'/'.$unique_key;
+		
+       $roles_insert_id = $user_data['user_roles_id'];
+       
+		/*$data = array(
+				'title' => $title,
+				'name' => $name,
+				'date' => $date
+		);
+		$this->db->where('user_roles_id', $id);
+		$this->db->update('mytable', $data);*/
+		
+        $user_token = $this->db->select('*')->from('user_meta')->where("user_roles_id = ".$roles_insert_id." AND meta_key = 'invite_token_".$company_id."'")->get()->num_rows();
+        $user_meta = array(
+            'user_roles_id' => $roles_insert_id,
+            'meta_key' => 'invite_token_'.$company_id,
+            'meta_value' => $unique_key
+        );
+        if($user_token == 0)
+        {
+            $this->db->insert('user_meta', $user_meta);
+        }
+        else
+        {
+		    $this->db->where('user_roles_id', $roles_insert_id);
+            $this->db->where('meta_key', 'invite_token_'.$company_id);
+		    $this->db->update('user_meta', $user_meta);
+        }
+        
+        $user_token_expiry = $this->db->select('*')->from('user_meta')->where("user_roles_id = ".$roles_insert_id." AND meta_key = 'invite_token_expiry'")->get()->num_rows();
+        $user_meta1 = array(
+            'user_roles_id' => $roles_insert_id,
+            'meta_key' => 'invite_token_expiry',
+            'meta_value' => $invite_token_expiry
+        );
+        if($user_token_expiry == 0)
+        {
+            $this->db->insert('user_meta', $user_meta1);
+        }
+        else
+        {
+            $this->db->where('user_roles_id', $roles_insert_id);
+            $this->db->where('meta_key', 'invite_token_expiry');
+            $this->db->update('user_meta', $user_meta1);
+        }
+        
+        $user_token_expiry_status = $this->db->select('*')->from('user_meta')->where("user_roles_id = ".$roles_insert_id." AND meta_key = 'invite_token_expiry_status'")->get()->num_rows();
+        $user_meta2 = array(
+            'user_roles_id' => $roles_insert_id,
+            'meta_key' => 'invite_token_expiry_status',
+            'meta_value' => ''
+        );
+        if($user_token_expiry == 0)
+        {
+            $this->db->insert('user_meta', $user_meta2);
+        }
+        else
+        {
+            $this->db->where('user_roles_id', $roles_insert_id);
+            $this->db->where('meta_key', 'invite_token_expiry_status');
+            $this->db->update('user_meta', $user_meta2);
+        }
+        
+		if($this->invite_mail($invite_url, $user_data)) {
+			$result['mail_sent'] = 'Invitation mail sent.';
+            $result['error'] = 0;
+		} else {
+			$result['mail_sent'] = 'There may some issue in sending invitation mail.';
+            $result['error'] = 1;
+		}
+		//$this->session->set_flashdata('message', $mail_sent);
+		//redirect('subcontractors');
+        echo json_encode($result);
+        die();
+	}
+	
+	function invite_mail($invite_url, $data) {
+		$data['company_id'] = $this->company_id;
+        $user_data = $this->db->select('users.*')->from('users')->join('user_roles', 'user_roles.user_id = users.id')->where("user_roles.role_id = 2 AND user_roles.company_id=".$data['company_id'])->get()->row_array();
+		/*
+		$config['protocol']    = 'smtp';
+		$config['smtp_host']    = 'ssl://smtp.gmail.com';
+		$config['smtp_port']    = '465';
+		$config['smtp_timeout'] = '7';
+		$config['smtp_user']    = 'emailtesterone@gmail.com';
+		$config['smtp_pass']    = 'kgn@123456';
+		$config['charset']    = 'utf-8';
+		$config['newline']    = "\r\n";
+		$config['mailtype'] = 'html';
+		$config['validation'] = TRUE; // bool whether to validate email or not      
+
+		$this->email->initialize($config);
+		*/
+		$this->load->library('email');
+		//$this->email->from($this->sessionArr['email'], $this->sessionArr['company_name']);
+		$this->email->from($this->settings->from_email_id,$this->settings->from_email_name);
+		$this->email->to($data["email"]);
+		$this->email->subject('Spera Invitation');
+		$this->email->message('Click on <a href="'.$invite_url.'">Spera Invitation Link</a> to complete signup and access your profile.');
+		return $this->email->send();
+	}
+	
+	function check_user_restriction() {
+        //echo "<pre>";print_r($_REQUEST);exit;
+        if (!empty($_REQUEST)) {
+            $user_id = $_REQUEST['owner_id'];
+            $company_id = $_REQUEST['company_id'];
+            $check_package_query = "Select * from propay_user_subscription where user_id='" . $user_id . "' AND CURDATE() between start_date and end_date and payment_detail_id !=0 ";
+            $check_package_current_date = $this->db->query($check_package_query)->row_array();
+            //echo "<pre>";print_r($check_package_current_date);exit;
+            if (!empty($check_package_current_date)) {
+                $check_users_company = $this->db->query('Select count(*) as total from user_roles r join users u on r.user_id=u.id where r.role_id != 2 and r.company_id="' . $company_id . '" and u.status != "deleted"')->row_array();
+                if (empty($check_users_company)) {
+                    $total_users = 0;
+                } else {
+                    $total_users = $check_users_company['total'];
+                }
+                $package_id = $check_package_current_date['package_id'];
+                $user_limit_arr = Package::find_by_id($package_id);
+                $user_limit = $user_limit_arr->user_limit;
+                if ($package_id == 3) {
+                    if ($total_users >= $user_limit) {
+                        $this->session->set_flashdata('message', 'warning:' . $this->lang->line('application_user_restriction'));
+                        echo "false";
+                        exit;
+                    } else {
+                        echo "true";
+                        exit;
+                    }
+                } elseif ($package_id == 2) {
+                    if ($total_users >= $user_limit) {
+                        $this->session->set_flashdata('message', 'warning:' . $this->lang->line('application_user_restriction'));
+                        echo "false";
+                        exit;
+                    } else {
+                        echo "true";
+                        exit;
+                    }
+                } elseif ($package_id == 1) {
+                    if ($total_users >= $user_limit) {
+                        $this->session->set_flashdata('message', 'warning:' . $this->lang->line('application_user_restriction'));
+                        echo "false";
+                        exit;
+                    } else {
+                        echo "true";
+                        exit;
+                    }
+                }
+                //echo "<pre>";print_r($user_limit_arr->user_limit);exit;
+            } else {
+                $t_check_package_query = "Select * from propay_user_subscription where user_id='" . $user_id . "' AND CURDATE() between start_date and end_date and payment_detail_id =0 ";
+                $t_check_package_current_date = $this->db->query($t_check_package_query)->row_array();
+                if (!empty($t_check_package_current_date)) {
+                    $t_check_users_company = $this->db->query('Select count(*) as total from user_roles r join users u on r.user_id=u.id where r.role_id != 2 and r.company_id="' . $company_id . '" and u.status != "deleted"')->row_array();
+                    if (empty($t_check_users_company)) {
+                        $total_users = 0;
+                    } else {
+                        $total_users = $t_check_users_company['total'];
+                    }
+                    $package_id = $t_check_package_current_date['package_id'];
+                    $user_limit_arr = Package::find_by_id($package_id);
+                    $user_limit = $user_limit_arr->user_limit;
+                    if ($package_id == 3) {
+                        if ($total_users >= $user_limit) {
+                            $this->session->set_flashdata('message', 'warning:' . $this->lang->line('application_user_restriction'));
+                            echo "false";
+                            exit;
+                        } else {
+                            echo "true";
+                            exit;
+                        }
+                    } elseif ($package_id == 2) {
+                        if ($total_users >= $user_limit) {
+                            $this->session->set_flashdata('message', 'warning:' . $this->lang->line('application_user_restriction'));
+                            echo "false";
+                            exit;
+                        } else {
+                            echo "true";
+                            exit;
+                        }
+                    } elseif ($package_id == 1) {
+                        if ($total_users >= $user_limit) {
+                            $this->session->set_flashdata('message', 'warning:' . $this->lang->line('application_user_restriction'));
+                            echo "false";
+                            exit;
+                        } else {
+                            echo "true";
+                            exit;
+                        }
+                    }
+                } else {
+                    echo "error";
+                    exit;
+                }
+            }
+        }
+    }
+
+}

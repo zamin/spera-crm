@@ -1,0 +1,202 @@
+.error-msg { color: #f00;}
+.form-register { max-width: 490px !important;}
+.login-link {    color: #4a4a4a; margin-top: 10px; display: block}
+.login-link:hover { color: #5cb85c;}
+.table-div.table-padding-top { padding-top :15px; }
+.login-link:hover { color: #5cb85c;}
+.global-loader, .ajax-loader { position: fixed;width: 100%;text-align: center;height: 100%;top: 0;left: 0;background: url(../images/bx_loader.gif) no-repeat center rgba(0,0,0,0.5); z-index : 11 }
+.ajax-loader { display:none; }
+#newRows .form-control { padding: 0 16px !important; }
+.flatpickr-calendar.static{position: absolute !important;}
+.error1 {
+    border-color: rgba(237, 85, 100, 0.64) !important;
+}
+.side{height: 100% !important}
+.btn-backp a{margin-right: 20px;}
+#ao_m_attachements_filter .form-control.input-sm {
+    float: right;
+    margin-top: -15px;
+}
+#ao_t_attachements_filter .form-control.input-sm {
+    float: right;
+    margin-top: -15px;
+}
+#printtimesheet .inline-textfield.hours, #printtimesheet .inline-textfield.minutes {
+    max-width: 45px;
+}
+/*.sidebar-bg {
+    background: #161b1f !important;
+}*/
+.search-field .default
+{
+	width: 120px !important;
+}
+.timespentp
+{
+	margin-left: 5px;
+}
+#printtimesheet table.table-striped tr td { vertical-align: middle; }
+#timesheet_desc {border: 1px solid #ccc; resize: none;}
+
+@media (max-width: 1200px) {
+	.flatpickr-innerContainer {  margin-top: 10px; } 
+	.flatpickr-current-month { font-size: 120%; }
+} 
+
+/*.form-group.filled {
+    position: relative;
+}
+.form-group.filled > span {
+    bottom: -18px;
+    color: #f00;
+    position: absolute;
+    right: 0;
+    font-size:12px;
+}*/
+
+#newRows .no-print.input-fields label {
+    display: inline-block;
+    width: 60%;
+}
+.name_of_company
+{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 16px 0 20px;
+}
+
+.comment-content{
+    overflow: visible !important; 
+}
+
+
+.table-head.table-select-box {position: relative;}
+.table-head.table-select-box select.required.form-control > option {
+    border-right: 2px solid #bbbbbb;
+    padding-bottom: 3px;
+    padding-top: 3px;
+}
+.table-head.table-select-box select.required.form-control {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    height: 32px;
+    margin-top: 6px;
+    padding: 3px 6px;
+    position: absolute;
+    right: 11%;
+    text-transform: capitalize;
+    top: 0;
+    width: auto;
+}
+.table-div .dataTables_filter input.form-control {height: 32px;
+    margin-top: -10px;}
+.dataTables_paginate li.paginate_button.previous.disabled a, .dataTables_paginate li.paginate_button.next.disabled a {color: #bbb;}
+
+    div.dataTables_wrapper div.dataTables_length.test label select {padding: 3px 6px;}
+
+#_company .form-group {margin-bottom: 0;margin-top: 20px;}
+#_company  .form-email-error {margin-top: 10px;color:#FF0000;}
+#_company  .modal-footer {
+    margin-top: 20px;
+}
+#_company .form-group {margin-bottom: 0;margin-top: 20px;}
+#_company  .form-email-error1 {margin-top: 10px;color:#FF0000;}
+#_company  .modal-footer {
+    margin-top: 20px;
+}
+
+#_clients .form-group {margin-bottom: 0;margin-top: 20px;}
+#_clients  .form-email-error1 {margin-top: 10px;color:#FF0000;}
+#_clients  .modal-footer {
+    margin-top: 20px;
+}
+#_clients .form-group {margin-bottom: 0;margin-top: 20px;}
+#_clients  .form-email-error {margin-top: 10px;color:#FF0000;}
+#_clients  .modal-footer {
+    margin-top: 20px;
+}
+#_subcontractor .form-group {margin-bottom: 0;margin-top: 20px;}
+#_subcontractor  .form-email-error1 {margin-top: 10px;color:#FF0000;}
+#_subcontractor  .modal-footer {
+    margin-top: 20px;
+}
+#_subcontractor .form-group {margin-bottom: 0;margin-top: 20px;}
+#_subcontractor  .form-email-error {margin-top: 10px; color:#FF0000;}
+#_subcontractor  .modal-footer {
+    margin-top: 20px;
+}
+.option-left{
+    text-align: left;
+}
+
+#label_text {display: inline-block;
+    line-height: 20px;
+    max-width: 200px;
+    overflow-wrap: break-word;}
+.dataTables_length.test label {
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 11px;
+    left: 200px;
+    position: absolute;
+    text-transform: capitalize;
+    top: -38px;
+}
+
+
+/*dropdown for company change */
+.table-head.table-select-box .chosen-container {
+    border: 1px solid #cccccc;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    height: 32px;
+    margin-top: 6px;
+    padding: 0;
+    position: absolute;
+    right: 180px;
+    text-transform: capitalize;
+    top: 0;
+    width: auto !important;
+    min-width: 230px;
+}
+.table-head.table-select-box .chosen-container .chosen-single {
+    height: auto;
+    line-height: 25px;
+    padding: 1px 6px;
+    width: 100%;
+    border-radius: 0;
+}
+
+.table-head.table-select-box .chosen-container .chosen-drop {
+    margin: 0;
+}
+
+.table-head.table-select-box .chosen-container .chosen-search {
+    display: none;
+}
+
+.table-head.table-select-box .chosen-container .chosen-results {
+    margin: 0;
+    padding: 0;
+}
+.table-head.table-select-box .chosen-container .active-result {
+    border-radius: 0;
+    line-height: 16px;
+}
+
+@media (max-width: 991px) {
+.table-head.table-select-box {height: auto;height: 120px;}
+#label_text {display: block;padding-top: 10px;}
+.table-head.table-select-box .chosen-container {left: auto;min-width: 150px;position: relative;right: auto;width: 100% !important;}
+div.dataTables_wrapper div.dataTables_filter label {width: 100%;}
+div.dataTables_wrapper div.dataTables_filter div.dataTables_filter label input {width: 100% !important;}
+.dataTables_length.test label {left: auto;right: 10px;top: -70px;top: -115px;}
+.table-div .dataTables_filter input.form-control {width: 100% !important;margin-left: 0;}
+#subcontractors_wrapper .paging_simple_numbers .pagination {float: right;}
+#clients_wrapper .paging_simple_numbers .pagination {float: right;}
+.table-div .col-sm-6 {width: 100%;}
+}
+@media (min-width: 768px) and (max-width: 991px) {
+table.table {display: inline-block;overflow-x: scroll;}
+}

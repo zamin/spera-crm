@@ -1,0 +1,132 @@
+<?php   
+$attributes = array('class' => '', 'id' => '_subcontractor', 'autocomplete' => 'off');
+echo form_open_multipart($form_action, $attributes); 
+?>
+<div class="ajax-loader"></div>
+	<?php 
+	// $profile_image = null;
+	if(isset($user)) { 
+		
+		// $profile_pic = base_url().'files/media/'.$user->userpic;
+		// $profile_pic_path = FCPATH.'/files/media/'.$user->userpic;
+		// $profile_image = 'no-image';
+		// if( !empty($user->userpic) && file_exists($profile_pic_path) ) {
+			// $profile_image = '<img src="'. $profile_pic .'" />';
+		// }
+	} else {
+		// $role = $this->uri->segment(3);
+		// $role_id = null;
+		// if($role == 'client') {
+			// $role_id = 3;
+		// } else if($role == 'subcontractor') {
+			// $role_id = 4;
+		// } 
+	?>
+	
+		<input type="hidden" name="role_id" value="4" />
+		<script type="text/javascript">
+			$(document).ready(function() {
+				/// make loader hidden in start
+				// $('#loading').hide(); 
+				$('#email').on('input', function(){
+					var email_val = $("#email").val();
+					var filter = /^[a-zA-Z0-9]+[a-zA-Z0-9_.-]+[a-zA-Z0-9_-]+@[a-zA-Z0-9]+[a-zA-Z0-9.-]+[a-zA-Z0-9]+.[a-z]{2,4}$/;
+					if(filter.test(email_val)){
+						// show loader
+						$('#_subcontractor > .ajax-loader').show();
+						$.get("<?php echo base_url()?>subcontractors/email_check", {
+							email: email_val
+						}, function(response){						
+							result = jQuery.parseJSON(response);
+							$('#_subcontractor > .ajax-loader').hide();
+							if(result.message != '') {
+								$('.form-email-error').html($('#email').val()+" "+result.message);
+								//$('#email').val('');
+								if(result.message == 'This email is already taken, choose another one'){
+									$('#email').val('');
+								}
+							}
+						});
+						return false;
+					}
+				});
+				$('#email').on('input', function() {
+					$('.form-email-error').html('');
+				});
+			});   
+		</script>
+	<?php } ?>
+	<?php echo "<label class='name_of_company'>Company : ".$name_of_company."</label>"; ?>
+	<div class="form-group">
+		<label for="firstname"><?=$this->lang->line('application_firstname');?> *</label>
+		<input id="firstname" type="text" name="firstname" class="form-control" value="<?php echo (!empty($user->firstname)) ? $user->firstname : ''; ?>" required/>
+	</div>
+	<div class="form-group">
+		<label for="lastname"><?=$this->lang->line('application_lastname');?> *</label>
+		<input id="lastname" type="text" name="lastname" class="required form-control" value="<?php echo (!empty($user->lastname)) ? $user->lastname : ''; ?>" required/>
+	</div>
+	<div class="form-group">
+		<label for="email"><?=$this->lang->line('application_email');?> *</label>
+		<input id="email" type="email" name="email" class="required email form-control" value="<?php echo (!empty($user->email)) ? $user->email : ''; ?>" <?php echo (!empty($user->email)) ? 'disabled' : ''; ?> required/>
+	</div>
+	<div class="form-email-error"></div>
+	
+	<?php if(isset($user)) { ?>
+		<input id="id" type="hidden" name="id" value="<?=$user->user_id;?>" />
+	
+	
+		<?php /* ?>
+		<div class="form-group">
+            <label for="title"><?=$this->lang->line('application_title');?> </label>
+            <input id="title" type="text" name="title" class="required form-control" value="<?php if(isset($registerdata)){echo $registerdata['title'];} ?>"  required/>
+		</div>
+		
+		<div class="form-group">
+			<label for="username"><?=$this->lang->line('application_username');?> *</label>
+			<input id="username" type="text" name="username" class="form-control" value="" required/>
+		</div>
+		<?php */ ?>
+		<div class="form-group">
+			<label for="password"><?=$this->lang->line('application_password');?> <?php echo (empty($user)) ? '*' : ''; ?></label>
+			<input id="password" type="password" name="password" class="form-control" <?php echo (empty($user)) ? 'required' : ''; ?>/>
+		</div>
+		<div class="form-group">
+			<label for="confirm_password"><?=$this->lang->line('application_confirm_password');?> <?php echo (empty($user)) ? '*' : ''; ?></label>
+			<input id="confirm_password" type="password" class="form-control" data-match="#password" <?php echo (empty($user)) ? 'required' : ''; ?>/>
+		</div>
+		
+	<?php } ?>	
+		
+		
+		<?php /* ?>
+		<div class="form-group">
+			<?php echo $profile_image; ?>
+			<label for="userfile"><?=$this->lang->line('application_profile_picture');?></label>
+			<div>
+				<input id="uploadFile" class="form-control uploadFile" placeholder="Choose File" disabled="disabled" />
+				<div class="fileUpload btn btn-primary">
+					<span><i class="fa fa-upload"></i><span class="hidden-xs"> <?=$this->lang->line('application_select');?></span></span>
+					<input id="uploadBtn" type="file" name="userfile" class="upload" />
+				</div>
+			</div>
+		</div>
+		<?php */ ?>
+
+	<?php /*if( !empty( $modules ) ){ ?>
+		<div class="form-group">
+			<label><?=$this->lang->line('application_module_access');?></label>
+			<ul class="accesslist">
+				<?php foreach ($modules as $key => $value) { ?>
+					<li> <input type="checkbox" class="checkbox" id="r_<?=$value->link;?>" name="access[]" value="<?=$value->id;?>" <?php if(in_array($value->id, $access)){ echo 'checked="checked"';}?> data-labelauty="<?=$this->lang->line('application_'.$value->link);?>"> </li>
+				<?php } ?>
+			</ul>
+		</div>
+	<?php } */ ?>
+	<?php if(isset($view)){ ?>
+		<input id="view" type="hidden" name="view" value="true" />
+	<?php } ?>
+	<div class="modal-footer">
+		<input type="submit" name="send" class="btn btn-primary" value="<?=$this->lang->line('application_save');?>"/>
+		<a class="btn" data-dismiss="modal"><?=$this->lang->line('application_close');?></a>
+	</div>
+<?php echo form_close(); ?>
