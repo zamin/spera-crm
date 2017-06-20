@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'http://spera.localhost:2200/';
+$config['base_url']	= '';
 
 /*
 |--------------------------------------------------------------------------
