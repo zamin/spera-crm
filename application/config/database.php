@@ -14,8 +14,8 @@
               $active_record = TRUE;
 
               $db['default']['hostname'] = 'localhost';
-              $db['default']['username'] = 'root';
-              $db['default']['password'] = '';
+              $db['default']['username'] = 'appspera_usr';
+              $db['default']['password'] = 'w7v34yT3chSper';
               $db['default']['database'] = 'spera_crm';
               $db['default']['dbdriver'] = 'mysql';
               $db['default']['dbprefix'] = '';
