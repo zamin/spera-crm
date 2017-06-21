@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="822ef364-d68c-4310-8b36-6d1bd8c733ff" name="Default" comment="" />
+    <list default="true" id="822ef364-d68c-4310-8b36-6d1bd8c733ff" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/application/config/config.php" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/application/config/database.php" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/application/views/blueline/projects/ao_views/_project.php" afterPath="$PROJECT_DIR$/application/views/blueline/projects/ao_views/_project.php" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -12,40 +18,6 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="default_target" />
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="register.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/controllers/register.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="216" column="138" lean-forward="false" selection-start-line="216" selection-start-column="87" selection-end-line="216" selection-end-column="138" />
-              <folding>
-                <marker date="1497983205806" expanded="true" signature="888:1105" ph="SELECT u.id,... users" />
-                <marker date="1497983205806" expanded="true" signature="1542:1619" ph="SELECT * FRO... promo_codes" />
-                <marker date="1497983205806" expanded="true" signature="4370:4403" ph="SELECT * FRO... package" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="_subscription.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/blueline/subscriptions/ao_subscriptions/_subscription.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="377">
-              <caret line="89" column="25" lean-forward="false" selection-start-line="89" selection-start-column="15" selection-end-line="89" selection-end-column="25" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="modal.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/application/views/blueline/theme/modal.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="393">
-              <caret line="108" column="13" lean-forward="true" selection-start-line="108" selection-start-column="13" selection-end-line="108" selection-end-column="13" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="aosubscriptions.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers/aosubscriptions.php">
           <provider selected="true" editor-type-id="text-editor">
@@ -78,11 +50,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="aoprojects.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="aoprojects.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/controllers/aoprojects.php">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="240">
-              <caret line="1550" column="34" lean-forward="true" selection-start-line="1550" selection-start-column="34" selection-end-line="1550" selection-end-column="34" />
+              <caret line="1550" column="34" lean-forward="false" selection-start-line="1550" selection-start-column="34" selection-end-line="1550" selection-end-column="34" />
               <folding>
                 <marker date="1497906870393" expanded="true" signature="2362:2641" ph="SELECT DISTI... projects" />
                 <marker date="1497906870393" expanded="true" signature="4162:4736" ph="SELECT DISTI... project_assign_clients" />
@@ -164,11 +136,31 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="config.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/application/config/config.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="272">
+              <caret line="16" column="25" lean-forward="false" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="database.php" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/application/config/database.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="289">
+              <caret line="17" column="60" lean-forward="true" selection-start-line="17" selection-start-column="60" selection-end-line="17" selection-end-column="60" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="_project.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/application/views/blueline/projects/ao_views/_project.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="85">
-              <caret line="5" column="10" lean-forward="true" selection-start-line="5" selection-start-column="10" selection-end-line="5" selection-end-column="10" />
+            <state relative-caret-position="210">
+              <caret line="65" column="13" lean-forward="false" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -223,16 +215,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>application_password</find>
-      <find>S</find>
-      <find>Select</find>
-      <find>Select C</find>
-      <find>Select Ca</find>
-      <find>Select Car</find>
-      <find>Select Card</find>
-      <find>T</find>
-      <find>Theme op</find>
-      <find>Theme option</find>
       <find>theme options</find>
       <find>heme options</find>
       <find>Theme options</find>
@@ -253,12 +235,24 @@
       <find>$project_assign_users</find>
       <find>Spera Payments</find>
       <find>phases</find>
+      <find>Select Some</find>
+      <find>Select Some options</find>
+      <find>S</find>
+      <find>Select M</find>
+      <find>Select USer</find>
+      <find>Select USe</find>
+      <find>Select US</find>
+      <find>Select U</find>
+      <find>Select</find>
+      <find>Select Members</find>
     </findStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/application/config/database.php" />
         <option value="$PROJECT_DIR$/application/config/config.php" />
         <option value="$PROJECT_DIR$/.htaccess" />
         <option value="$PROJECT_DIR$/application/language/english/messages_lang.php" />
@@ -271,6 +265,7 @@
         <option value="$PROJECT_DIR$/application/controllers/aosubscriptions.php" />
         <option value="$PROJECT_DIR$/application/views/blueline/theme/modal.php" />
         <option value="$PROJECT_DIR$/application/views/blueline/projects/ao_views/_project.php" />
+        <option value="$PROJECT_DIR$/application/config/database.php" />
       </list>
     </option>
   </component>
@@ -294,6 +289,7 @@
     <option name="width" value="1382" />
     <option name="height" value="744" />
   </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -334,176 +330,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blueline" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blueline" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="subscriptions" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blueline" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="subscriptions" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ao_subscriptions" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blueline" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="projects" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="blueline" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="projects" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="ao_views" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="spera-crm_" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="application" />
-              <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.jetbrains.php.projectView.PhpTreeStructureProvider$1" />
             </PATH_ELEMENT>
           </PATH>
@@ -571,7 +397,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="8894000" />
+    <option name="totallyTimeSpent" value="9229000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -580,7 +406,7 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Gulp" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="-1" side_tool="true" content_ui="tabs" />
@@ -609,140 +435,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/application/config/database.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="18" column="45" lean-forward="false" selection-start-line="18" selection-start-column="45" selection-end-line="18" selection-end-column="45" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web.config">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="6" lean-forward="false" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.htaccess">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="11" lean-forward="false" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
-          <folding>
-            <marker date="1497907799779" expanded="true" signature="0:199" ph="&lt;IfModule mod_rewrite.c&gt;" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/config/config.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="184">
-          <caret line="264" column="63" lean-forward="false" selection-start-line="264" selection-start-column="58" selection-end-line="264" selection-end-column="63" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/blueline/theme/application_owner.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="46" column="61" lean-forward="true" selection-start-line="46" selection-start-column="61" selection-end-line="46" selection-end-column="61" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/language---old/english/application_lang.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="246" column="7" lean-forward="false" selection-start-line="246" selection-start-column="7" selection-end-line="246" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/language/english/messages_lang.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="219">
-          <caret line="160" column="91" lean-forward="false" selection-start-line="160" selection-start-column="91" selection-end-line="160" selection-end-column="91" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/Project.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <marker date="1497906137483" expanded="true" signature="774:1026" ph="SELECT * FRO... projects" />
-            <marker date="1497906137483" expanded="true" signature="1172:1303" ph="SELECT `cate... projects" />
-            <marker date="1497906137483" expanded="true" signature="1464:1621" ph="SELECT sum(`... project_has_timesheets" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/Payments.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/models/PromoCodes.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="102">
-          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/ao_subscriptions/_existing.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="654">
-          <caret line="42" column="18" lean-forward="true" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/ao_subscriptions/payment_account.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/ao_subscriptions/create_payment_account.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/ao_subscriptions/all.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-469">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/package.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-578">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/application/views/blueline/auth/register.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="88" column="43" lean-forward="false" selection-start-line="88" selection-start-column="43" selection-end-line="88" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/ao_subscriptions/_subscription.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -1005,6 +697,416 @@
             <marker date="1497906870393" expanded="true" signature="132721:132803" ph="select assig... project_assign_tasks" />
             <marker date="1497906870393" expanded="true" signature="133106:133196" ph="select first... users" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="25" lean-forward="false" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config/database.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="55" lean-forward="true" selection-start-line="18" selection-start-column="55" selection-end-line="18" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web.config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="6" lean-forward="false" selection-start-line="10" selection-start-column="6" selection-end-line="10" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.htaccess">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="11" lean-forward="false" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/theme/application_owner.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="46" column="61" lean-forward="true" selection-start-line="46" selection-start-column="61" selection-end-line="46" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/language---old/english/application_lang.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="246" column="7" lean-forward="false" selection-start-line="246" selection-start-column="7" selection-end-line="246" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/language/english/messages_lang.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="160" column="91" lean-forward="false" selection-start-line="160" selection-start-column="91" selection-end-line="160" selection-end-column="91" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Project.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding>
+            <marker date="1497906137483" expanded="true" signature="774:1026" ph="SELECT * FRO... projects" />
+            <marker date="1497906137483" expanded="true" signature="1172:1303" ph="SELECT `cate... projects" />
+            <marker date="1497906137483" expanded="true" signature="1464:1621" ph="SELECT sum(`... project_has_timesheets" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/Payments.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/models/PromoCodes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/ao_subscriptions/_existing.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="654">
+          <caret line="42" column="18" lean-forward="true" selection-start-line="42" selection-start-column="18" selection-end-line="42" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/ao_subscriptions/payment_account.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/ao_subscriptions/create_payment_account.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/ao_subscriptions/all.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-469">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/package.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-578">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/auth/register.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="88" column="43" lean-forward="false" selection-start-line="88" selection-start-column="43" selection-end-line="88" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/ao_subscriptions/_subscription.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="79" column="45" lean-forward="false" selection-start-line="79" selection-start-column="45" selection-end-line="79" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/settings/aosettings/paymentaccount.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/settings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="5" lean-forward="true" selection-start-line="5" selection-start-column="5" selection-end-line="5" selection-end-column="5" />
+          <folding>
+            <marker date="1497906878002" expanded="true" signature="2971:3037" ph="DELETE FROM " />
+            <marker date="1497906878002" expanded="true" signature="3559:3610" ph="SELECT u.* F... spera_accounts" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/language/english/application_lang.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="193">
+          <caret line="478" column="45" lean-forward="false" selection-start-line="478" selection-start-column="45" selection-end-line="478" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/language/dutch/application_lang.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="1334" column="53" lean-forward="true" selection-start-line="1334" selection-start-column="53" selection-end-line="1334" selection-end-column="53" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/aosettings.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="770" column="29" lean-forward="true" selection-start-line="770" selection-start-column="29" selection-end-line="770" selection-end-column="29" />
+          <folding>
+            <marker date="1497906887929" expanded="true" signature="976:1636" ph="SELECT u.*,p... users" />
+            <marker date="1497906887929" expanded="true" signature="3700:3764" ph="Select * fro... company_details" />
+            <marker date="1497906887929" expanded="true" signature="4465:4531" ph="DELETE FROM " />
+            <marker date="1497906887929" expanded="true" signature="5055:5106" ph="SELECT u.* F... spera_accounts" />
+            <marker date="1497906887929" expanded="true" signature="6995:7314" ph="..." />
+            <marker date="1497906887929" expanded="true" signature="7124:7280" ph="..." />
+            <marker date="1497906887929" expanded="true" signature="9295:9385" ph="SELECT u.* F... spera_accounts" />
+            <marker date="1497906887929" expanded="true" signature="9469:9520" ph="SELECT u.* F... spera_accounts" />
+            <marker date="1497906887929" expanded="true" signature="12045:12096" ph="SELECT u.* F... spera_accounts" />
+            <marker date="1497906887929" expanded="true" signature="15601:15700" ph="UPDATE spera... " />
+            <marker date="1497906887929" expanded="true" signature="17193:17273" ph="select count... " />
+            <marker date="1497906887929" expanded="true" signature="19302:19367" ph="Select * fro... company_details" />
+            <marker date="1497906887929" expanded="true" signature="19528:19608" ph="select count... " />
+            <marker date="1497906887929" expanded="true" signature="24571:24651" ph="select count... " />
+            <marker date="1497906887929" expanded="true" signature="26259:26365" ph="Update compa... " />
+            <marker date="1497906887929" expanded="true" signature="28581:28687" ph="Update compa... " />
+            <marker date="1497906887929" expanded="true" signature="30117:30620" ph="SELECT u.*,p... users" />
+            <marker date="1497906887929" expanded="true" signature="31839:31900" ph="SELECT * FRO... user_api_details" />
+            <marker date="1497906887929" expanded="true" signature="32176:32433" ph="SELECT u.id,... users" />
+            <marker date="1497906887929" expanded="true" signature="33861:33922" ph="SELECT * FRO... user_api_details" />
+            <marker date="1497906887929" expanded="true" signature="34981:35042" ph="SELECT * FRO... user_api_details" />
+            <marker date="1497906887929" expanded="true" signature="35216:35473" ph="SELECT u.id,... users" />
+            <marker date="1497906887929" expanded="true" signature="36683:36734" ph="SELECT * FRO... user_api_details" />
+            <marker date="1497906887929" expanded="true" signature="38417:38468" ph="SELECT * FRO... user_api_details" />
+            <marker date="1497906887929" expanded="true" signature="40162:40213" ph="SELECT * FRO... user_api_details" />
+            <marker date="1497906887929" expanded="true" signature="41893:41954" ph="SELECT * FRO... user_api_details" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/subscriptions/ao_subscriptions/_subscription.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="377">
+          <caret line="89" column="25" lean-forward="false" selection-start-line="89" selection-start-column="15" selection-end-line="89" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/register.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="342">
+          <caret line="216" column="138" lean-forward="false" selection-start-line="216" selection-start-column="87" selection-end-line="216" selection-end-column="138" />
+          <folding>
+            <marker date="1497983205806" expanded="true" signature="888:1105" ph="SELECT u.id,... users" />
+            <marker date="1497983205806" expanded="true" signature="1542:1619" ph="SELECT * FRO... promo_codes" />
+            <marker date="1497983205806" expanded="true" signature="4370:4403" ph="SELECT * FRO... package" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/theme/modal.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="393">
+          <caret line="108" column="13" lean-forward="true" selection-start-line="108" selection-start-column="13" selection-end-line="108" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/csubscriptions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="314">
+          <caret line="19" column="31" lean-forward="false" selection-start-line="19" selection-start-column="31" selection-end-line="19" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/subscriptions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="6" column="29" lean-forward="false" selection-start-line="6" selection-start-column="29" selection-end-line="6" selection-end-column="29" />
+          <folding>
+            <marker date="1497906865715" expanded="true" signature="863:1942" ph="SELECT u.*, users" />
+            <marker date="1497906865715" expanded="true" signature="1789:1866" ph="select count... propay_user_subscription" />
+            <marker date="1497906865715" expanded="true" signature="8742:9622" ph="SELECT u.*, users" />
+            <marker date="1497906865715" expanded="true" signature="10584:11097" ph="SELECT pus.*... propay_user_subscription" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/aosubscriptions.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="274">
+          <caret line="732" column="37" lean-forward="false" selection-start-line="732" selection-start-column="37" selection-end-line="732" selection-end-column="37" />
+          <folding>
+            <marker date="1497983335646" expanded="true" signature="790:1293" ph="SELECT u.*,p... users" />
+            <marker date="1497983335646" expanded="true" signature="5197:5301" ph="Select * fro... propay_user_subscription" />
+            <marker date="1497983335646" expanded="true" signature="6353:6457" ph="Select * fro... propay_user_subscription" />
+            <marker date="1497983335646" expanded="true" signature="7376:7413" ph="SELECT * FRO... propay_data" />
+            <marker date="1497983335646" expanded="true" signature="7636:7761" ph="SELECT * FRO... propay_user_subscription" />
+            <marker date="1497983335646" expanded="true" signature="7992:8025" ph="SELECT * FRO... package" />
+            <marker date="1497983335646" expanded="true" signature="12979:13891" ph="SELECT u.*, users_x" />
+            <marker date="1497983335646" expanded="true" signature="14838:15351" ph="SELECT pus.*... propay_user_subscription" />
+            <marker date="1497983335646" expanded="true" signature="24180:24235" ph="UPDATE propa... " />
+            <marker date="1497983335646" expanded="true" signature="27488:27613" ph="SELECT * FRO... propay_user_subscription" />
+            <marker date="1497983335646" expanded="true" signature="27848:27881" ph="SELECT * FRO... package" />
+            <marker date="1497983335646" expanded="true" signature="33853:33886" ph="SELECT * fro... package" />
+            <marker date="1497983335646" expanded="true" signature="35126:35206" ph="SELECT * FRO... promo_codes" />
+            <marker date="1497983335646" expanded="true" signature="37042:37075" ph="SELECT * fro... package" />
+            <marker date="1497983335646" expanded="true" signature="46735:46786" ph="SELECT u.* F... spera_accounts" />
+            <marker date="1497983335646" expanded="true" signature="50854:51949" ph="..." />
+            <marker date="1497983335646" expanded="true" signature="51010:51922" ph="..." />
+            <marker date="1497983335646" expanded="true" signature="63234:63333" ph="UPDATE spera... " />
+            <marker date="1497983335646" expanded="true" signature="64286:64376" ph="UPDATE spera... " />
+            <marker date="1497983335646" expanded="true" signature="69994:70049" ph="UPDATE propa... " />
+            <marker date="1497983335646" expanded="true" signature="70128:70178" ph="UPDATE propa... " />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config/routes.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1511">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/projects/ao_views/all.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="187">
+          <caret line="11" column="0" lean-forward="false" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/controllers/aoprojects.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="1550" column="34" lean-forward="false" selection-start-line="1550" selection-start-column="34" selection-end-line="1550" selection-end-column="34" />
+          <folding>
+            <marker date="1497906870393" expanded="true" signature="2362:2641" ph="SELECT DISTI... projects" />
+            <marker date="1497906870393" expanded="true" signature="4162:4736" ph="SELECT DISTI... project_assign_clients" />
+            <marker date="1497906870393" expanded="true" signature="6252:6462" ph="SELECT DISTI... projects" />
+            <marker date="1497906870393" expanded="true" signature="7293:7568" ph="Select count... projects" />
+            <marker date="1497906870393" expanded="true" signature="7651:7988" ph="SELECT t.* F... project_has_tasks" />
+            <marker date="1497906870393" expanded="true" signature="7651:8345" ph="SELECT t.* F... " />
+            <marker date="1497906870393" expanded="true" signature="7996:8057" ph="SELECT t.* f... project_has_tasks" />
+            <marker date="1497906870393" expanded="true" signature="9311:9569" ph="Select count... projects" />
+            <marker date="1497906870393" expanded="true" signature="9642:9961" ph="SELECT t.* F... project_has_tasks" />
+            <marker date="1497906870393" expanded="true" signature="9642:10299" ph="SELECT t.* F... " />
+            <marker date="1497906870393" expanded="true" signature="9969:10030" ph="SELECT t.* f... project_has_tasks" />
+            <marker date="1497906870393" expanded="true" signature="10482:10908" ph="SELECT DISTI... projects" />
+            <marker date="1497906870393" expanded="true" signature="12118:12676" ph="SELECT DISTI... project_assign_clients" />
+            <marker date="1497906870393" expanded="true" signature="17949:18747" ph="select count... *" />
+            <marker date="1497906870393" expanded="true" signature="17982:18741" ph="SELECT t.* F... project_has_tasks" />
+            <marker date="1497906870393" expanded="true" signature="19222:19563" ph="SELECT t.* F... project_has_tasks" />
+            <marker date="1497906870393" expanded="true" signature="19576:19935" ph="SELECT t.* f... project_has_tasks" />
+            <marker date="1497906870393" expanded="true" signature="21391:21473" ph="select assig... project_assign_tasks" />
+            <marker date="1497906870393" expanded="true" signature="21752:21842" ph="select first... users" />
+            <marker date="1497906870393" expanded="true" signature="22634:22996" ph="SELECT t.* F... project_has_tasks" />
+            <marker date="1497906870393" expanded="true" signature="23009:23389" ph="SELECT t.* f... project_has_tasks" />
+            <marker date="1497906870393" expanded="true" signature="25198:25280" ph="select assig... project_assign_tasks" />
+            <marker date="1497906870393" expanded="true" signature="25602:25692" ph="select first... users" />
+            <marker date="1497906870393" expanded="true" signature="35249:35287" ph="DELETE FROM " />
+            <marker date="1497906870393" expanded="true" signature="40275:40385" ph="SELECT * fro... project_has_tasks_comment" />
+            <marker date="1497906870393" expanded="true" signature="45129:45225" ph="SELECT * fro... project_has_tasks_attachment" />
+            <marker date="1497906870393" expanded="true" signature="47297:47363" ph="DELETE from " />
+            <marker date="1497906870393" expanded="true" signature="49014:49142" ph="select * fro... user_roles" />
+            <marker date="1497906870393" expanded="true" signature="49255:49339" ph="select * fro... company_details" />
+            <marker date="1497906870393" expanded="true" signature="53413:53710" ph="SELECT u.*,r... project_assign_clients" />
+            <marker date="1497906870393" expanded="true" signature="55544:55624" ph="SELECT assig... project_assign_tasks" />
+            <marker date="1497906870393" expanded="true" signature="58360:58425" ph="DELETE from " />
+            <marker date="1497906870393" expanded="true" signature="60186:60309" ph="select * fro... user_roles" />
+            <marker date="1497906870393" expanded="true" signature="60430:60514" ph="select * fro... company_details" />
+            <marker date="1497906870393" expanded="true" signature="64540:64605" ph="DELETE from " />
+            <marker date="1497906870393" expanded="true" signature="65872:66169" ph="SELECT u.*,r... project_assign_clients" />
+            <marker date="1497906870393" expanded="true" signature="68996:69067" ph="SELECT * fro... project_has_tasks_attachment" />
+            <marker date="1497906870393" expanded="true" signature="69560:69629" ph="DELETE From " />
+            <marker date="1497906870393" expanded="true" signature="69873:69938" ph="DELETE from " />
+            <marker date="1497906870393" expanded="true" signature="76919:76994" ph="DELETE from " />
+            <marker date="1497906870393" expanded="true" signature="78471:78605" ph="select * fro... user_roles" />
+            <marker date="1497906870393" expanded="true" signature="78685:78769" ph="select * fro... company_details" />
+            <marker date="1497906870393" expanded="true" signature="81847:82072" ph="SELECT DISTI... users" />
+            <marker date="1497906870393" expanded="true" signature="83139:83330" ph="SELECT c.* F... companies" />
+            <marker date="1497906870393" expanded="true" signature="84064:84144" ph="SELECT assig... project_assign_clients" />
+            <marker date="1497906870393" expanded="true" signature="86257:86332" ph="DELETE from " />
+            <marker date="1497906870393" expanded="true" signature="87849:87965" ph="select * fro... user_roles" />
+            <marker date="1497906870393" expanded="true" signature="88045:88129" ph="select * fro... company_details" />
+            <marker date="1497906870393" expanded="true" signature="91496:91571" ph="DELETE from " />
+            <marker date="1497906870393" expanded="true" signature="92137:92328" ph="SELECT c.* F... companies" />
+            <marker date="1497906870393" expanded="true" signature="92608:92833" ph="SELECT DISTI... users" />
+            <marker date="1497906870393" expanded="true" signature="97449:97511" ph="DELETE FROM " />
+            <marker date="1497906870393" expanded="true" signature="97583:97648" ph="DELETE FROM " />
+            <marker date="1497906870393" expanded="true" signature="97742:97809" ph="DELETE FROM " />
+            <marker date="1497906870393" expanded="true" signature="97917:97984" ph="DELETE FROM " />
+            <marker date="1497906870393" expanded="true" signature="98091:98153" ph="DELETE FROM " />
+            <marker date="1497906870393" expanded="true" signature="98275:98349" ph="SELECT * fro... project_has_milestones_attachment" />
+            <marker date="1497906870393" expanded="true" signature="98815:98887" ph="DELETE From " />
+            <marker date="1497906870393" expanded="true" signature="98948:99015" ph="DELETE FROM " />
+            <marker date="1497906870393" expanded="true" signature="99126:99195" ph="SELECT * fro... project_has_tasks_attachment" />
+            <marker date="1497906870393" expanded="true" signature="99600:99667" ph="DELETE From " />
+            <marker date="1497906870393" expanded="true" signature="99724:99792" ph="DELETE FROM " />
+            <marker date="1497906870393" expanded="true" signature="99893:99958" ph="DELETE FROM " />
+            <marker date="1497906870393" expanded="true" signature="103323:103448" ph="SELECT * fro... project_has_milestones_comment" />
+            <marker date="1497906870393" expanded="true" signature="108478:108589" ph="SELECT * fro... project_has_milestones_attachment" />
+            <marker date="1497906870393" expanded="true" signature="114670:114756" ph="SELECT * fro... project_has_milestones_attachment" />
+            <marker date="1497906870393" expanded="true" signature="120991:121077" ph="SELECT * fro... project_has_milestones_attachment" />
+            <marker date="1497906870393" expanded="true" signature="121575:121659" ph="DELETE From " />
+            <marker date="1497906870393" expanded="true" signature="125777:125857" ph="DELETE from " />
+            <marker date="1497906870393" expanded="true" signature="126869:126940" ph="DELETE from " />
+            <marker date="1497906870393" expanded="true" signature="129306:129647" ph="SELECT t.* F... project_has_tasks" />
+            <marker date="1497906870393" expanded="true" signature="129660:130019" ph="SELECT t.* f... project_has_tasks" />
+            <marker date="1497906870393" expanded="true" signature="131569:131642" ph="select * fro... project_has_tasks_attachment" />
+            <marker date="1497906870393" expanded="true" signature="132721:132803" ph="select assig... project_assign_tasks" />
+            <marker date="1497906870393" expanded="true" signature="133106:133196" ph="select first... users" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/views/blueline/projects/ao_views/_project.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="65" column="13" lean-forward="false" selection-start-line="65" selection-start-column="13" selection-end-line="65" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config/config.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="25" lean-forward="false" selection-start-line="16" selection-start-column="25" selection-end-line="16" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/application/config/database.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="289">
+          <caret line="17" column="60" lean-forward="true" selection-start-line="17" selection-start-column="60" selection-end-line="17" selection-end-column="60" />
+          <folding />
         </state>
       </provider>
     </entry>

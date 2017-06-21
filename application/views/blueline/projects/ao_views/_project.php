@@ -62,7 +62,7 @@ if(isset($project)){ ?>
 <div class="form-group">
     <label for="client">Team</label><br>
     <select name="project_assign_clients[]" multiple class="chosen-select" >
-        <option value="" disabled >Select Members</option>
+        <option value="" disabled >Choose Members</option>
         <?php
         foreach ($clients as $key=>$value)
         {
