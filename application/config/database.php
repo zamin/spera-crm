@@ -12,10 +12,11 @@
 
               $active_group = 'default';
               $active_record = TRUE;
+              $local = false;
 
               $db['default']['hostname'] = 'localhost';
-              $db['default']['username'] = 'appspera_usr';
-              $db['default']['password'] = 'w7v34yT3chSper';
+              $db['default']['username'] = $local ? 'root' : 'appspera_usr';
+              $db['default']['password'] = $local ? '' : 'w7v34yT3chSper';
               $db['default']['database'] = 'spera_crm';
               $db['default']['dbdriver'] = 'mysql';
               $db['default']['dbprefix'] = '';
